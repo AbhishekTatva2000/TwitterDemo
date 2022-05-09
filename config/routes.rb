@@ -4,7 +4,7 @@ Rails.application.routes.draw do
       sessions: 'users/sessions'
   }
   resources :relationships, only: [:create, :destroy]
-  resources :tweets, only: [:create, :index]
+  resources :tweets, only: [:create, :index, :update, :destroy]
 
   resources :users, only: :show do
     collection do

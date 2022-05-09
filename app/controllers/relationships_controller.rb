@@ -2,10 +2,14 @@ class RelationshipsController < ApplicationController
     before_action :set_user, only: :create
 
     def create
-        json_response({status: flase, message: "You are already following this user!"}, :bad_request) and return if current_user.following?(@tw_user)
-
-        @Relationship = current_user.follow!(@tw_user)
-        json_response(status: true, message: "Successfully followd!")
+        json_response({status: false, message: "You are already following this user!"}, :bad_request) and return if current_user.following?(@tw_user)
+        
+        if current_user.id == @tw_user.id
+            json_response({success: false, message: "You can not fllow your self!"}, :bad_request)
+        else
+            @Relationship = current_user.follow!(@tw_user)
+            json_response(status: true, message: "Successfully followd!")
+        end
     end
 
     def destroy

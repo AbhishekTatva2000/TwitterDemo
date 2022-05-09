@@ -26,6 +26,26 @@ class TweetsController < ApplicationController
         end
     end
 
+    def update
+        @tweet = current_user.tweets.find_by(id: params[:id]).update(tweet_params)
+
+        if @tweet
+            json_response(success: true, message: "Tweet successfully edited!",tweet: tweet_params)
+        else
+            json_response({success: false, message: "Something went wrong!"}, :unprocessable_entity)
+        end
+    end
+
+    def destroy
+        @tweet = current_user.tweets.find_by(id: params[:id]).delete
+
+        if @tweet
+            json_response(success: true, message: "Tweet successfully deleted!")
+        else
+            json_response({success: false, message: "Something went wrong!"}, :unprocessable_entity)
+        end
+    end
+
     private
     def tweet_params
         params.require(:tweet).permit(:content)

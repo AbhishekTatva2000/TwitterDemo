@@ -16,7 +16,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     if @user.save
       json_response({status: true, message: "user successfuly created!"}, :created)
     else
-      json_response({status: false, message: "something went wrong!", error: @user.error }, :unprocessable_entity)
+      json_response({status: false, message: "something went wrong!", error: @user.errors }, :unprocessable_entity)
     end
   end
 
